@@ -16,10 +16,26 @@ class TestSwitchProject:
 
         assert find_project([working_dir], "red-amber") == [join(working_dir, project)]
 
+    def test_find_a_project_by_name_with_numbers(self):
+        working_dir = join(f"/tmp/project{random_string()}")
+
+        project = 'red-amber9'
+        create_temp_projects(working_dir, [project])
+
+        assert find_project([working_dir], "red-amber9") == [join(working_dir, project)]
+
     def test_find_a_project_via_acronym_for_projects_with_dashes(self):
         working_dir = join(f"/tmp/project{random_string()}")
 
         project = 'green-web'
+        create_temp_projects(working_dir, [project])
+
+        assert find_project([working_dir], "gw") == [join(working_dir, project)]
+
+    def test_find_a_project_via_acronym_for_projects_with_dashes_and_numbers(self):
+        working_dir = join(f"/tmp/project{random_string()}")
+
+        project = 'green2-web3'
         create_temp_projects(working_dir, [project])
 
         assert find_project([working_dir], "gw") == [join(working_dir, project)]

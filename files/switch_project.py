@@ -29,7 +29,7 @@ def find_project(working_dirs: List[str], search_term: str) -> List[str]:
 
 
 def matches_acronym_with_dashes(directory_name: str, acronym: List[str]) -> bool:
-    acronym_patterns = [f"{letter}[a-z]+" for letter in acronym]
+    acronym_patterns = [f"{letter}[a-z0-9]+" for letter in acronym]
 
     # eg acronym 'gw' would produce 'g[a-z]+-w[a-z]+'
     pattern = re.compile("-".join(acronym_patterns))
@@ -95,7 +95,9 @@ if __name__ == '__main__':
         sys.exit(0)
 
     search_terms = sys.argv[1]
-    working_directories = [join(environ['HOME'], 'code'), join(environ['HOME'], 'go', 'src')]
+    working_directories = [join(environ['HOME'], 'code'),
+                           join(environ['HOME'], 'go', 'src'),
+                           join(environ['HOME'], 'code', 'ansible-toolbelt')]
     state_dir = environ['HOME']
 
     Cli(state_dir, working_directories, search_terms).select_a_project()
