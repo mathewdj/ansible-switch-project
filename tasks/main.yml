@@ -1,0 +1,28 @@
+---
+- name: Create bash_functions directory
+  file:
+    path: "{{ lookup('env', 'HOME') }}/bash_functions"
+    state: directory
+
+- name: Copy switch-project files to bash_functions directory
+  copy:
+    src: switch_project_function.sh
+    dest: "{{ lookup('env', 'HOME') }}/bash_functions/"
+
+- name: Add source bash_functions to .zshrc
+  lineinfile:
+    path: "{{ lookup('env', 'HOME') }}/.zshrc"
+    regexp: "^for bash_function in ~/bash_functions/"
+    line: "for bash_function in ~/bash_functions/**/*.sh; do source $bash_function; echo $bash_function; done"
+
+- name: Copy switch-project python files to bash_functions directory and make executable
+  copy:
+    src: switch_project.py
+    dest: "{{ lookup('env', 'HOME') }}/bash_functions/"
+    mode: ug+rx
+
+- name: Add putting bash_functions on PATH in .zshrc so that python script can be found in any directory
+  lineinfile:
+    path: "{{ lookup('env', 'HOME') }}/.zshrc"
+    regexp: '^export PATH=\"\$PATH\:\$HOME/bash_functions/\"'
+    line: 'export PATH="$PATH:$HOME/bash_functions/"'
