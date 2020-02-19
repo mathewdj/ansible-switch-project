@@ -81,12 +81,14 @@ class Cli(NamedTuple):
             else:
                 f.write("No project match")
 
-    def multi_project_selection(self, muti_projects: List[str]) -> str:
-        indexed_project = [f"{i}) {prj}" for i, prj in enumerate(muti_projects)]
+    @staticmethod
+    def multi_project_selection(multi_projects: List[str]) -> str:
+        indexed_project = [f"{i + 1}) {prj}" for i, prj in enumerate(multi_projects)]
         print("\n".join(indexed_project))
-        selection = int(input("\n Selection: "))
+        # Index starts at 1 not 0
+        selection = int(input("\n Selection: ")) - 1
 
-        return muti_projects[selection]
+        return multi_projects[selection]
 
 
 if __name__ == '__main__':
