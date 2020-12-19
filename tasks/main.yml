@@ -9,12 +9,6 @@
     src: switch_project_function.sh
     dest: "{{ lookup('env', 'HOME') }}/.functions/"
 
-- name: Add source .functions to .zshrc
-  lineinfile:
-    path: "{{ lookup('env', 'HOME') }}/.zshrc"
-    regexp: "^for bash_function in ~/.functions/"
-    line: "for bash_function in ~/.functions/**/*.sh; do source $bash_function; echo $bash_function; done"
-
 - name: Copy switch-project python files to .functions directory and make executable
   copy:
     src: switch_project.py
