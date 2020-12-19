@@ -20,9 +20,3 @@
     src: switch_project.py
     dest: "{{ lookup('env', 'HOME') }}/.functions/"
     mode: ug+rx
-
-- name: Add putting .functions on PATH in .zshrc so that python script can be found in any directory
-  lineinfile:
-    path: "{{ lookup('env', 'HOME') }}/.zshrc"
-    regexp: '^export PATH=\"\$PATH\:\$HOME/.functions/\"'
-    line: 'export PATH="$PATH:$HOME/.functions/"'
